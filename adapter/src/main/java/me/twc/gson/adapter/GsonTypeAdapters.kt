@@ -271,6 +271,8 @@ object GsonTypeAdapters {
     )
 
     //</editor-fold>
+
+    //<editor-fold desc="StringBuffer">
     class StringBufferAdapter(
         private val includeNullString: Boolean = false
     ) : TypeAdapter<StringBuffer>() {
@@ -296,8 +298,6 @@ object GsonTypeAdapters {
         StringBuffer::class.java,
         STRING_BUFFER_INCLUDE_NULL_STRING
     )
-    //<editor-fold desc="StringBuffer">
-
     //</editor-fold>
 
     //</editor-fold>
