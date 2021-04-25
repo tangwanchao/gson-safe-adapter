@@ -204,77 +204,118 @@ class ExampleUnitTest {
     @Test
     fun longTest() {
         var jsonString = """{"long1":null,"long2":null}"""
-        var data = fromJson<LongData>(jsonString,LongData::class.java)
-        assertEquals(0L,data.long1)
-        assertEquals(0L,data.long2)
+        var data = fromJson<LongData>(jsonString, LongData::class.java)
+        assertEquals(0L, data.long1)
+        assertEquals(0L, data.long2)
 
         jsonString = """{"long1":"null","long2":"null"}"""
-        data = fromJson(jsonString,LongData::class.java)
-        assertEquals(0L,data.long1)
-        assertEquals(0L,data.long2)
+        data = fromJson(jsonString, LongData::class.java)
+        assertEquals(0L, data.long1)
+        assertEquals(0L, data.long2)
 
         jsonString = """{"long1":"","long2":""}"""
-        data = fromJson(jsonString,LongData::class.java)
-        assertEquals(0L,data.long1)
-        assertEquals(0L,data.long2)
+        data = fromJson(jsonString, LongData::class.java)
+        assertEquals(0L, data.long1)
+        assertEquals(0L, data.long2)
 
         jsonString = """{"long1":"abc","long2":"sdf"}"""
-        data = fromJson(jsonString,LongData::class.java)
-        assertEquals(0L,data.long1)
-        assertEquals(0L,data.long2)
+        data = fromJson(jsonString, LongData::class.java)
+        assertEquals(0L, data.long1)
+        assertEquals(0L, data.long2)
 
         jsonString = """{"long1":"123","long2":"123"}"""
-        data = fromJson(jsonString,LongData::class.java)
-        assertEquals(123L,data.long1)
-        assertEquals(123L,data.long2)
+        data = fromJson(jsonString, LongData::class.java)
+        assertEquals(123L, data.long1)
+        assertEquals(123L, data.long2)
 
         jsonString = """{"long1":123,"long2":123}"""
-        data = fromJson(jsonString,LongData::class.java)
-        assertEquals(123L,data.long1)
-        assertEquals(123L,data.long2)
+        data = fromJson(jsonString, LongData::class.java)
+        assertEquals(123L, data.long1)
+        assertEquals(123L, data.long2)
 
         jsonString = """{"long1":19223372036854775890,"long2":19223372036854775890}"""
-        data = fromJson(jsonString,LongData::class.java)
-        assertEquals(0L,data.long1)
-        assertEquals(0L,data.long2)
+        data = fromJson(jsonString, LongData::class.java)
+        assertEquals(0L, data.long1)
+        assertEquals(0L, data.long2)
     }
 
     @Test
     fun floatTest() {
         var jsonString = """{"float1":null,"float2":null}"""
-        var data = fromJson<FloatData>(jsonString,FloatData::class.java)
-        assertEquals(0f,data.float1)
-        assertEquals(0f,data.float2)
+        var data = fromJson<FloatData>(jsonString, FloatData::class.java)
+        assertEquals(0f, data.float1)
+        assertEquals(0f, data.float2)
 
         jsonString = """{"float1":"null","float2":"null"}"""
-        data = fromJson(jsonString,FloatData::class.java)
-        assertEquals(0f,data.float1)
-        assertEquals(0f,data.float2)
+        data = fromJson(jsonString, FloatData::class.java)
+        assertEquals(0f, data.float1)
+        assertEquals(0f, data.float2)
 
         jsonString = """{"float1":"","float2":""}"""
-        data = fromJson(jsonString,FloatData::class.java)
-        assertEquals(0f,data.float1)
-        assertEquals(0f,data.float2)
+        data = fromJson(jsonString, FloatData::class.java)
+        assertEquals(0f, data.float1)
+        assertEquals(0f, data.float2)
 
         jsonString = """{"float1":"abc","float2":"abc"}"""
-        data = fromJson(jsonString,FloatData::class.java)
-        assertEquals(0f,data.float1)
-        assertEquals(0f,data.float2)
+        data = fromJson(jsonString, FloatData::class.java)
+        assertEquals(0f, data.float1)
+        assertEquals(0f, data.float2)
 
         jsonString = """{"float1":"123.123","float2":"123.123"}"""
-        data = fromJson(jsonString,FloatData::class.java)
-        assertEquals(123.123f,data.float1)
-        assertEquals(123.123f,data.float2)
+        data = fromJson(jsonString, FloatData::class.java)
+        assertEquals(123.123f, data.float1)
+        assertEquals(123.123f, data.float2)
 
         jsonString = """{"float1":123.123,"float2":123.123}"""
-        data = fromJson(jsonString,FloatData::class.java)
-        assertEquals(123.123f,data.float1)
-        assertEquals(123.123f,data.float2)
+        data = fromJson(jsonString, FloatData::class.java)
+        assertEquals(123.123f, data.float1)
+        assertEquals(123.123f, data.float2)
 
-        jsonString = """{"float1":192233721922337203685477589019223372036854775890036854775890.333,"float2":191921922337203685477589023372036854775890223372036854775890.333}"""
-        data = fromJson(jsonString,FloatData::class.java)
-        assertEquals(Float.POSITIVE_INFINITY,data.float1)
-        assertEquals(Float.POSITIVE_INFINITY,data.float2)
+        jsonString =
+            """{"float1":192233721922337203685477589019223372036854775890036854775890.333,"float2":191921922337203685477589023372036854775890223372036854775890.333}"""
+        data = fromJson(jsonString, FloatData::class.java)
+        assertEquals(Float.POSITIVE_INFINITY, data.float1)
+        assertEquals(Float.POSITIVE_INFINITY, data.float2)
+    }
+
+    @Test
+    fun doubleTest() {
+        var jsonString = """{"double1":null,"double2":null}"""
+        var data = fromJson<DoubleData>(jsonString, DoubleData::class.java)
+        assertEquals(0.0, data.double1, 0.0)
+        assertEquals(0.0, data.double2, 0.0)
+
+        jsonString = """{"double1":"null","double2":"null"}"""
+        data = fromJson(jsonString, DoubleData::class.java)
+        assertEquals(0.0, data.double1, 0.0)
+        assertEquals(0.0, data.double2, 0.0)
+
+        jsonString = """{"double1":"","double2":""}"""
+        data = fromJson(jsonString, DoubleData::class.java)
+        assertEquals(0.0, data.double1, 0.0)
+        assertEquals(0.0, data.double2, 0.0)
+
+        jsonString = """{"double1":"abc","double2":"def"}"""
+        data = fromJson(jsonString, DoubleData::class.java)
+        assertEquals(0.0, data.double1, 0.0)
+        assertEquals(0.0, data.double2, 0.0)
+
+        jsonString = """{"double1":"123.321","double2":"123.321"}"""
+        data = fromJson(jsonString, DoubleData::class.java)
+        assertEquals(123.321, data.double1, 0.0)
+        assertEquals(123.321, data.double2, 0.0)
+
+        jsonString = """{"double1":123.321,"double2":123.321}"""
+        data = fromJson(jsonString, DoubleData::class.java)
+        assertEquals(123.321, data.double1, 0.0)
+        assertEquals(123.321, data.double2, 0.0)
+
+        jsonString = """{
+            |"double1":192233721922337203685477589019223372036854775890036854775890192233721922337203685477589019223372036854775890036854775890192233721922337203685477589019223372036854775890036854775890192233721922337203685477589019223372036854775890036854775890192233721922337203685477589019223372036854775890036854775890192233721922337203685477589019223372036854775890036854775890192233721922337203685477589019223372036854775890036854775890192233721922337203685477589019223372036854775890036854775890192233721922337203685477589019223372036854775890036854775890.333,
+            |"double2":192233721922337203685477589019223372036854775890036854775890192233721922337203685477589019223372036854775890036854775890192233721922337203685477589019223372036854775890036854775890192233721922337203685477589019223372036854775890036854775890192233721922337203685477589019223372036854775890036854775890192233721922337203685477589019223372036854775890036854775890192233721922337203685477589019223372036854775890036854775890192233721922337203685477589019223372036854775890036854775890192233721922337203685477589019223372036854775890036854775890.333}""".trimMargin()
+        data = fromJson(jsonString, DoubleData::class.java)
+        assertEquals(Double.POSITIVE_INFINITY, data.double1, 0.0)
+        assertEquals(Double.POSITIVE_INFINITY, data.double2, 0.0)
     }
 
     val gson = newGson()

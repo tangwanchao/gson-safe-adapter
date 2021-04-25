@@ -176,6 +176,30 @@ object GsonTypeAdapters {
         FLOAT
     )
     //</editor-fold>
+
+    //<editor-fold desc="double">
+    val DOUBLE = object : TypeAdapter<Number>() {
+        override fun write(out: JsonWriter, value: Number) {
+            out.value(value)
+        }
+
+        override fun read(read: JsonReader): Number {
+            return try {
+                read.nextDouble()
+            } catch (th: Throwable) {
+                logD("DoubleTypeAdapter read err", th)
+                read.skipValue()
+                0.0
+            }
+        }
+    }
+
+    val DOUBLE_FACTORY: TypeAdapterFactory = TypeAdapters.newFactory(
+        Double::class.javaPrimitiveType,
+        Double::class.javaObjectType,
+        DOUBLE
+    )
+    //</editor-fold>
 }
 
 class LongTypeAdapter : TypeAdapter<Number>() {
@@ -190,22 +214,6 @@ class LongTypeAdapter : TypeAdapter<Number>() {
             logD("LongTypeAdapter read err", th)
             read.skipValue()
             0L
-        }
-    }
-}
-
-class DoubleTypeAdapter : TypeAdapter<Number>() {
-    override fun write(out: JsonWriter, value: Number) {
-        out.value(value)
-    }
-
-    override fun read(read: JsonReader): Number {
-        return try {
-            read.nextDouble()
-        } catch (th: Throwable) {
-            logD("DoubleTypeAdapter read err", th)
-            read.skipValue()
-            0.0
         }
     }
 }
