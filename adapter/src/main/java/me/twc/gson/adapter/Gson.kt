@@ -12,6 +12,7 @@ import com.google.gson.TypeAdapterFactory
 /**
  * @see GsonTypeAdapters.STRING_INCLUDE_NULL_STRING_FACTORY
  * @see GsonTypeAdapters.STRING_BUILDER_INCLUDE_NULL_STRING_FACTORY
+ * @see GsonTypeAdapters.STRING_BUFFER_INCLUDE_NULL_STRING_FACTORY
  */
 fun GsonBuilder.registerSafeTypeAdapters(
     booleanAdapterFactory: TypeAdapterFactory = GsonTypeAdapters.BOOLEAN_FACTORY,
