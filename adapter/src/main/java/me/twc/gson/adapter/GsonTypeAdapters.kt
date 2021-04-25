@@ -200,25 +200,21 @@ object GsonTypeAdapters {
         DOUBLE
     )
     //</editor-fold>
-}
 
-class StringTypeAdapter : TypeAdapter<String>() {
-    override fun write(out: JsonWriter, value: String) {
-        out.value(value)
-    }
+    //<editor-fold desc="String">
+    class StringTypeAdapter(
+        private val includeNullString: Boolean = false
+    ) : TypeAdapter<String>() {
+        override fun write(out: JsonWriter, value: String) {
+            out.value(value)
+        }
 
-    override fun read(read: JsonReader): String {
-        if (read.peek() == JsonToken.NULL) {
-            read.nextNull()
-            return ""
-        } else {
+        override fun read(read: JsonReader): String {
             return try {
                 val str = read.nextString()
-                if (str == "null" || str == "NULL") {
-                    ""
-                } else {
+                if (includeNullString || !str.equals("null", true)) {
                     str
-                }
+                } else ""
             } catch (th: Throwable) {
                 logD("StringTypeAdapter read err", th)
                 read.skipValue()
@@ -226,6 +222,19 @@ class StringTypeAdapter : TypeAdapter<String>() {
             }
         }
     }
+
+    val STRING = StringTypeAdapter(includeNullString = false)
+    val STRING_INCLUDE_NULL_STRING = StringTypeAdapter(includeNullString = true)
+
+    val STRING_FACTORY: TypeAdapterFactory = TypeAdapters.newFactory(
+        String::class.java,
+        STRING
+    )
+    val STRING_INCLUDE_NULL_STRING_FACTORY: TypeAdapterFactory = TypeAdapters.newFactory(
+        String::class.java,
+        STRING_INCLUDE_NULL_STRING
+    )
+    //</editor-fold>
 }
 
 class BigDecimalTypeAdapter : TypeAdapter<BigDecimal>() {

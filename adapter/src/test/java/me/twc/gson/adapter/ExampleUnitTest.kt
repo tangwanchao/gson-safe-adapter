@@ -318,13 +318,90 @@ class ExampleUnitTest {
         assertEquals(Double.POSITIVE_INFINITY, data.double2, 0.0)
     }
 
-    val gson = newGson()
+    @Test
+    fun stringTest() {
+        var jsonString = """{"string1":null,"string2":null}"""
+        var data = fromJson<StringData>(jsonString, StringData::class.java)
+        assertEquals("", data.string1)
+        assertEquals("", data.string2)
 
-    private inline fun <reified T> fromJson(jsonString: String, type: Type = T::class.java): T {
-        return gson.fromJson(jsonString, type)
+        jsonString = """{"string1":"null","string2":"null"}"""
+        data = fromJson(jsonString, StringData::class.java)
+        assertEquals("", data.string1)
+        assertEquals("", data.string2)
+
+        jsonString = """{"string1":"Null","string2":"nUll"}"""
+        data = fromJson(jsonString, StringData::class.java)
+        assertEquals("", data.string1)
+        assertEquals("", data.string2)
+
+        jsonString = """{"string1":"","string2":""}"""
+        data = fromJson(jsonString, StringData::class.java)
+        assertEquals("", data.string1)
+        assertEquals("", data.string2)
+
+        jsonString = """{"string1":"123","string2":123}"""
+        data = fromJson(jsonString, StringData::class.java)
+        assertEquals("123", data.string1)
+        assertEquals("123", data.string2)
+
+        jsonString = """{"string1":"abc","string2":"abc"}"""
+        data = fromJson(jsonString, StringData::class.java)
+        assertEquals("abc", data.string1)
+        assertEquals("abc", data.string2)
     }
 
-    private fun newGson() = Gson().newBuilder()
-        .registerSafeTypeAdapters()
-        .create()
+    @Test
+    fun stringIncludeNullStringTest() {
+        var jsonString = """{"string1":null,"string2":null}"""
+        var data = fromJson<StringData>(jsonString, StringData::class.java,true)
+        assertEquals("", data.string1)
+        assertEquals("", data.string2)
+
+        jsonString = """{"string1":"null","string2":"null"}"""
+        data = fromJson(jsonString, StringData::class.java,true)
+        assertEquals("null", data.string1)
+        assertEquals("null", data.string2)
+
+        jsonString = """{"string1":"Null","string2":"nUll"}"""
+        data = fromJson(jsonString, StringData::class.java,true)
+        assertEquals("Null", data.string1)
+        assertEquals("nUll", data.string2)
+
+        jsonString = """{"string1":"","string2":""}"""
+        data = fromJson(jsonString, StringData::class.java,true)
+        assertEquals("", data.string1)
+        assertEquals("", data.string2)
+
+        jsonString = """{"string1":"123","string2":123}"""
+        data = fromJson(jsonString, StringData::class.java,true)
+        assertEquals("123", data.string1)
+        assertEquals("123", data.string2)
+
+        jsonString = """{"string1":"abc","string2":"abc"}"""
+        data = fromJson(jsonString, StringData::class.java,true)
+        assertEquals("abc", data.string1)
+        assertEquals("abc", data.string2)
+    }
+
+    val gson = newGson()
+    val gsonIncludeNullString = newGson(true)
+
+    private inline fun <reified T> fromJson(
+        jsonString: String,
+        type: Type = T::class.java,
+        includeNullString: Boolean = false
+    ): T {
+        val g = if(includeNullString) gsonIncludeNullString else gson
+        return g.fromJson(jsonString, type)
+    }
+
+    private fun newGson(includeNullString: Boolean = false): Gson {
+        val stringFactory = if (includeNullString) {
+            GsonTypeAdapters.STRING_INCLUDE_NULL_STRING_FACTORY
+        } else GsonTypeAdapters.STRING_FACTORY
+        return Gson().newBuilder()
+            .registerSafeTypeAdapters(stringAdapterFactory = stringFactory)
+            .create()
+    }
 }
