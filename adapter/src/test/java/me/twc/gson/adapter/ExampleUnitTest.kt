@@ -90,39 +90,77 @@ class ExampleUnitTest {
     @Test
     fun byteTest() {
         var jsonString = """{"byte1":null,"byte2":null}"""
-        var data = fromJson<PrimitiveByteData>(jsonString,PrimitiveByteData::class.java)
-        assertEquals(0.toByte(),data.byte1)
-        assertEquals(0.toByte(),data.byte2)
+        var data = fromJson<PrimitiveByteData>(jsonString, PrimitiveByteData::class.java)
+        assertEquals(0.toByte(), data.byte1)
+        assertEquals(0.toByte(), data.byte2)
 
         jsonString = """{"byte1":"null","byte2":"null"}"""
-        data = fromJson(jsonString,PrimitiveByteData::class.java)
-        assertEquals(0.toByte(),data.byte1)
-        assertEquals(0.toByte(),data.byte2)
+        data = fromJson(jsonString, PrimitiveByteData::class.java)
+        assertEquals(0.toByte(), data.byte1)
+        assertEquals(0.toByte(), data.byte2)
 
         jsonString = """{"byte1":"","byte2":""}"""
-        data = fromJson(jsonString,PrimitiveByteData::class.java)
-        assertEquals(0.toByte(),data.byte1)
-        assertEquals(0.toByte(),data.byte2)
+        data = fromJson(jsonString, PrimitiveByteData::class.java)
+        assertEquals(0.toByte(), data.byte1)
+        assertEquals(0.toByte(), data.byte2)
 
         jsonString = """{"byte1":"as","byte2":"df"}"""
-        data = fromJson(jsonString,PrimitiveByteData::class.java)
-        assertEquals(0.toByte(),data.byte1)
-        assertEquals(0.toByte(),data.byte2)
+        data = fromJson(jsonString, PrimitiveByteData::class.java)
+        assertEquals(0.toByte(), data.byte1)
+        assertEquals(0.toByte(), data.byte2)
 
         jsonString = """{"byte1":"100","byte2":"100"}"""
-        data = fromJson(jsonString,PrimitiveByteData::class.java)
-        assertEquals(100.toByte(),data.byte1)
-        assertEquals(100.toByte(),data.byte2)
+        data = fromJson(jsonString, PrimitiveByteData::class.java)
+        assertEquals(100.toByte(), data.byte1)
+        assertEquals(100.toByte(), data.byte2)
 
         jsonString = """{"byte1":55,"byte2":55}"""
-        data = fromJson(jsonString,PrimitiveByteData::class.java)
-        assertEquals(55.toByte(),data.byte1)
-        assertEquals(55.toByte(),data.byte2)
+        data = fromJson(jsonString, PrimitiveByteData::class.java)
+        assertEquals(55.toByte(), data.byte1)
+        assertEquals(55.toByte(), data.byte2)
 
         jsonString = """{"byte1":128,"byte2":128}"""
-        data = fromJson(jsonString,PrimitiveByteData::class.java)
-        assertEquals((-128).toByte(),data.byte1)
-        assertEquals((-128).toByte(),data.byte2)
+        data = fromJson(jsonString, PrimitiveByteData::class.java)
+        assertEquals((-128).toByte(), data.byte1)
+        assertEquals((-128).toByte(), data.byte2)
+    }
+
+    @Test
+    fun shortTest() {
+        var jsonString = """{"short1":null,"short2":null}"""
+        var data = fromJson<ShortData>(jsonString, ShortData::class.java)
+        assertEquals(0.toShort(), data.short1)
+        assertEquals(0.toShort(), data.short2)
+
+        jsonString = """{"short1":"null","short2":"null"}"""
+        data = fromJson(jsonString, ShortData::class.java)
+        assertEquals(0.toShort(), data.short1)
+        assertEquals(0.toShort(), data.short2)
+
+        jsonString = """{"short1":"","short2":""}"""
+        data = fromJson(jsonString, ShortData::class.java)
+        assertEquals(0.toShort(), data.short1)
+        assertEquals(0.toShort(), data.short2)
+
+        jsonString = """{"short1":"dfs","short2":"sdf"}"""
+        data = fromJson(jsonString, ShortData::class.java)
+        assertEquals(0.toShort(), data.short1)
+        assertEquals(0.toShort(), data.short2)
+
+        jsonString = """{"short1":"123","short2":"123"}"""
+        data = fromJson(jsonString, ShortData::class.java)
+        assertEquals(123.toShort(), data.short1)
+        assertEquals(123.toShort(), data.short2)
+
+        jsonString = """{"short1":123,"short2":123}"""
+        data = fromJson(jsonString, ShortData::class.java)
+        assertEquals(123.toShort(), data.short1)
+        assertEquals(123.toShort(), data.short2)
+
+        jsonString = """{"short1":32768,"short2":32768}"""
+        data = fromJson(jsonString, ShortData::class.java)
+        assertEquals((-32768).toShort(), data.short1)
+        assertEquals((-32768).toShort(), data.short2)
     }
 
     val gson = newGson()

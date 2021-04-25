@@ -66,19 +66,19 @@ object GsonTypeAdapters {
         }
 
         override fun read(reader: JsonReader): Number {
-                return when (reader.peek()) {
-                    JsonToken.NULL -> {
-                        reader.nextNull()
-                        defaultValue
-                    }
-                    else -> try {
-                        reader.nextInt().toByte()
-                    } catch (th: Throwable) {
-                        logD("ByteTypeAdapter read err", th)
-                        reader.skipValue()
-                        defaultValue
-                    }
+            return when (reader.peek()) {
+                JsonToken.NULL -> {
+                    reader.nextNull()
+                    defaultValue
                 }
+                else -> try {
+                    reader.nextInt().toByte()
+                } catch (th: Throwable) {
+                    logD("ByteTypeAdapter read err", th)
+                    reader.skipValue()
+                    defaultValue
+                }
+            }
         }
     }
 
@@ -86,6 +86,38 @@ object GsonTypeAdapters {
         Byte::class.javaPrimitiveType,
         Byte::class.javaObjectType,
         BYTE
+    )
+    //</editor-fold>
+
+    //<editor-fold desc="short">
+    val SHORT = object : TypeAdapter<Number>() {
+
+        val defaultValue: Short = 0
+
+        override fun write(writer: JsonWriter, value: Number) {
+            writer.value(value)
+        }
+
+        override fun read(reader: JsonReader): Number {
+            return when (reader.peek()) {
+                JsonToken.NULL -> {
+                    reader.nextNull()
+                    defaultValue
+                }
+                else -> try {
+                    reader.nextInt().toShort()
+                } catch (th: Throwable) {
+                    reader.skipValue()
+                    defaultValue
+                }
+            }
+        }
+    }
+
+    val SHORT_FACTORY: TypeAdapterFactory = TypeAdapters.newFactory(
+        Short::class.javaPrimitiveType,
+        Short::class.javaObjectType,
+        SHORT
     )
     //</editor-fold>
 }
