@@ -19,6 +19,9 @@ import java.math.BigInteger
 
 object GsonTypeAdapters {
     //<editor-fold desc="boolean">
+    /**
+     * @see TypeAdapters.BOOLEAN
+     */
     val BOOLEAN = object : TypeAdapter<Boolean>() {
 
         val defaultValue = false
@@ -29,10 +32,6 @@ object GsonTypeAdapters {
 
         override fun read(reader: JsonReader): Boolean {
             return when (reader.peek()) {
-                JsonToken.NULL -> {
-                    reader.nextNull()
-                    defaultValue
-                }
                 JsonToken.STRING -> {
                     reader.nextString()?.toBoolean() ?: defaultValue
                 }
@@ -59,25 +58,17 @@ object GsonTypeAdapters {
     //<editor-fold desc="byte">
     val BYTE = object : TypeAdapter<Number>() {
 
-        val defaultValue: Byte = 0
-
         override fun write(writer: JsonWriter, value: Number) {
             writer.value(value)
         }
 
         override fun read(reader: JsonReader): Number {
-            return when (reader.peek()) {
-                JsonToken.NULL -> {
-                    reader.nextNull()
-                    defaultValue
-                }
-                else -> try {
-                    reader.nextInt().toByte()
-                } catch (th: Throwable) {
-                    logD("ByteTypeAdapter read err", th)
-                    reader.skipValue()
-                    defaultValue
-                }
+            return try {
+                reader.nextInt().toByte()
+            } catch (th: Throwable) {
+                logD("ByteTypeAdapter read err", th)
+                reader.skipValue()
+                0.toByte()
             }
         }
     }
@@ -92,25 +83,17 @@ object GsonTypeAdapters {
     //<editor-fold desc="short">
     val SHORT = object : TypeAdapter<Number>() {
 
-        val defaultValue: Short = 0
-
         override fun write(writer: JsonWriter, value: Number) {
             writer.value(value)
         }
 
         override fun read(reader: JsonReader): Number {
-            return when (reader.peek()) {
-                JsonToken.NULL -> {
-                    reader.nextNull()
-                    defaultValue
-                }
-                else -> try {
-                    reader.nextInt().toShort()
-                } catch (th: Throwable) {
-                    logD("ShortTypeAdapter read err", th)
-                    reader.skipValue()
-                    defaultValue
-                }
+            return try {
+                reader.nextInt().toShort()
+            } catch (th: Throwable) {
+                logD("ShortTypeAdapter read err", th)
+                reader.skipValue()
+                0.toShort()
             }
         }
     }
