@@ -9,6 +9,7 @@ import com.google.gson.stream.JsonReader
 import com.google.gson.stream.JsonToken
 import com.google.gson.stream.JsonWriter
 import me.twc.gson.adapter.utils.logD
+import java.lang.StringBuilder
 import java.math.BigDecimal
 import java.math.BigInteger
 
@@ -224,16 +225,45 @@ object GsonTypeAdapters {
     }
 
     val STRING = StringTypeAdapter(includeNullString = false)
-    val STRING_INCLUDE_NULL_STRING = StringTypeAdapter(includeNullString = true)
-
     val STRING_FACTORY: TypeAdapterFactory = TypeAdapters.newFactory(
         String::class.java,
         STRING
     )
+
+    val STRING_INCLUDE_NULL_STRING = StringTypeAdapter(includeNullString = true)
     val STRING_INCLUDE_NULL_STRING_FACTORY: TypeAdapterFactory = TypeAdapters.newFactory(
         String::class.java,
         STRING_INCLUDE_NULL_STRING
     )
+    //</editor-fold>
+
+    //<editor-fold desc="others">
+    //<editor-fold desc="StringBuilder">
+    class StringBuilderAdapter(
+        private val includeNullString: Boolean = false
+    ) : TypeAdapter<StringBuilder>() {
+        override fun write(writer: JsonWriter, value: StringBuilder?) {
+            writer.value(value?.toString() ?: "")
+        }
+
+        override fun read(reader: JsonReader): StringBuilder {
+            val stringAdapter = if (includeNullString) STRING_INCLUDE_NULL_STRING else STRING
+            return StringBuilder(stringAdapter.read(reader))
+        }
+    }
+
+    val STRING_BUILDER = StringBuilderAdapter(includeNullString = false)
+    val STRING_BUILDER_FACTORY: TypeAdapterFactory = TypeAdapters.newFactory(
+        StringBuilder::class.java,
+        STRING_BUILDER
+    )
+
+    val STRING_BUILDER_INCLUDE_NULL_STRING = StringBuilderAdapter(includeNullString = true)
+    val STRING_BUILDER_INCLUDE_NULL_STRING_FACTORY: TypeAdapterFactory = TypeAdapters.newFactory(
+        StringBuilder::class.java,
+        STRING_BUILDER_INCLUDE_NULL_STRING
+    )
+    //</editor-fold>
     //</editor-fold>
 }
 

@@ -11,6 +11,7 @@ import com.google.gson.TypeAdapterFactory
 
 /**
  * @see GsonTypeAdapters.STRING_INCLUDE_NULL_STRING_FACTORY
+ * @see GsonTypeAdapters.STRING_BUILDER_INCLUDE_NULL_STRING_FACTORY
  */
 fun GsonBuilder.registerSafeTypeAdapters(
     booleanAdapterFactory: TypeAdapterFactory = GsonTypeAdapters.BOOLEAN_FACTORY,
@@ -20,7 +21,8 @@ fun GsonBuilder.registerSafeTypeAdapters(
     longAdapterFactory: TypeAdapterFactory = GsonTypeAdapters.LONG_FACTORY,
     floatAdapterFactory: TypeAdapterFactory = GsonTypeAdapters.FLOAT_FACTORY,
     doubleAdapterFactory: TypeAdapterFactory = GsonTypeAdapters.DOUBLE_FACTORY,
-    stringAdapterFactory: TypeAdapterFactory = GsonTypeAdapters.STRING_FACTORY
+    stringAdapterFactory: TypeAdapterFactory = GsonTypeAdapters.STRING_FACTORY,
+    stringBuilderFactory: TypeAdapterFactory = GsonTypeAdapters.STRING_BUILDER_FACTORY
 ): GsonBuilder {
     registerTypeAdapterFactory(booleanAdapterFactory)
     registerTypeAdapterFactory(byteAdapterFactory)
@@ -30,5 +32,6 @@ fun GsonBuilder.registerSafeTypeAdapters(
     registerTypeAdapterFactory(floatAdapterFactory)
     registerTypeAdapterFactory(doubleAdapterFactory)
     registerTypeAdapterFactory(stringAdapterFactory)
+    registerTypeAdapterFactory(stringBuilderFactory)
     return this
 }

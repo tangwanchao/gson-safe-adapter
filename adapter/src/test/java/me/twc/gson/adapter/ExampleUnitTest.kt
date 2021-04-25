@@ -384,6 +384,72 @@ class ExampleUnitTest {
         assertEquals("abc", data.string2)
     }
 
+    @Test
+    fun stringBuilder() {
+        var jsonString = """{"builder1":null,"builder2":null}"""
+        var data = fromJson<StringBuilderData>(jsonString, StringBuilderData::class.java,false)
+        assertEquals("", data.builder1.toString())
+        assertEquals("", data.builder2.toString())
+
+        jsonString = """{"builder1":"null","builder2":"null"}"""
+        data = fromJson(jsonString, StringBuilderData::class.java,false)
+        assertEquals("", data.builder1.toString())
+        assertEquals("", data.builder2.toString())
+
+        jsonString = """{"builder1":"Null","builder2":"nUll"}"""
+        data = fromJson(jsonString, StringBuilderData::class.java,false)
+        assertEquals("", data.builder1.toString())
+        assertEquals("", data.builder2.toString())
+
+        jsonString = """{"builder1":"","builder2":""}"""
+        data = fromJson(jsonString, StringBuilderData::class.java,false)
+        assertEquals("", data.builder1.toString())
+        assertEquals("", data.builder2.toString())
+
+        jsonString = """{"builder1":"123","builder2":123}"""
+        data = fromJson(jsonString, StringBuilderData::class.java,false)
+        assertEquals("123", data.builder1.toString())
+        assertEquals("123", data.builder2.toString())
+
+        jsonString = """{"builder1":"abc","builder2":"abc"}"""
+        data = fromJson(jsonString, StringBuilderData::class.java,false)
+        assertEquals("abc", data.builder1.toString())
+        assertEquals("abc", data.builder2.toString())
+    }
+
+    @Test
+    fun stringBuilderIncludeNullString() {
+        var jsonString = """{"builder1":null,"builder2":null}"""
+        var data = fromJson<StringBuilderData>(jsonString, StringBuilderData::class.java,true)
+        assertEquals("", data.builder1.toString())
+        assertEquals("", data.builder2.toString())
+
+        jsonString = """{"builder1":"null","builder2":"null"}"""
+        data = fromJson(jsonString, StringBuilderData::class.java,true)
+        assertEquals("null", data.builder1.toString())
+        assertEquals("null", data.builder2.toString())
+
+        jsonString = """{"builder1":"Null","builder2":"nUll"}"""
+        data = fromJson(jsonString, StringBuilderData::class.java,true)
+        assertEquals("Null", data.builder1.toString())
+        assertEquals("nUll", data.builder2.toString())
+
+        jsonString = """{"builder1":"","builder2":""}"""
+        data = fromJson(jsonString, StringBuilderData::class.java,true)
+        assertEquals("", data.builder1.toString())
+        assertEquals("", data.builder2.toString())
+
+        jsonString = """{"builder1":"123","builder2":123}"""
+        data = fromJson(jsonString, StringBuilderData::class.java,true)
+        assertEquals("123", data.builder1.toString())
+        assertEquals("123", data.builder2.toString())
+
+        jsonString = """{"builder1":"abc","builder2":"abc"}"""
+        data = fromJson(jsonString, StringBuilderData::class.java,true)
+        assertEquals("abc", data.builder1.toString())
+        assertEquals("abc", data.builder2.toString())
+    }
+
     val gson = newGson()
     val gsonIncludeNullString = newGson(true)
 
@@ -400,8 +466,14 @@ class ExampleUnitTest {
         val stringFactory = if (includeNullString) {
             GsonTypeAdapters.STRING_INCLUDE_NULL_STRING_FACTORY
         } else GsonTypeAdapters.STRING_FACTORY
+        val stringBuilderFactory = if(includeNullString){
+            GsonTypeAdapters.STRING_BUILDER_INCLUDE_NULL_STRING_FACTORY
+        } else GsonTypeAdapters.STRING_BUILDER_FACTORY
         return Gson().newBuilder()
-            .registerSafeTypeAdapters(stringAdapterFactory = stringFactory)
+            .registerSafeTypeAdapters(
+                stringAdapterFactory = stringFactory,
+                stringBuilderFactory = stringBuilderFactory
+            )
             .create()
     }
 }
