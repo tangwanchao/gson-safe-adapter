@@ -8,8 +8,10 @@ import com.google.gson.TypeAdapterFactory
  * @date 2021/04/23
  */
 fun GsonBuilder.registerSafeTypeAdapters(
-    booleanAdapterFactory: TypeAdapterFactory = GsonTypeAdapters.BOOLEAN_FACTORY
+    booleanAdapterFactory: TypeAdapterFactory = GsonTypeAdapters.BOOLEAN_FACTORY,
+    byteAdapterFactory: TypeAdapterFactory = GsonTypeAdapters.BYTE_FACTORY
 ): GsonBuilder {
     registerTypeAdapterFactory(booleanAdapterFactory)
+    registerTypeAdapterFactory(byteAdapterFactory)
     return this
 }

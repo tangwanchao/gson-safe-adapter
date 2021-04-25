@@ -80,8 +80,50 @@ class ExampleUnitTest {
         primitiveBoolData = fromJson(jsonString)
         assertEquals(false, primitiveBoolData.bool)
         assertEquals(false, primitiveBoolData.bool2)
+
+        jsonString = """{"bool":null,"bool2":null}"""
+        primitiveBoolData = fromJson(jsonString)
+        assertEquals(false, primitiveBoolData.bool)
+        assertEquals(false, primitiveBoolData.bool2)
     }
 
+    @Test
+    fun byteTest() {
+        var jsonString = """{"byte1":null,"byte2":null}"""
+        var data = fromJson<PrimitiveByteData>(jsonString,PrimitiveByteData::class.java)
+        assertEquals(0.toByte(),data.byte1)
+        assertEquals(0.toByte(),data.byte2)
+
+        jsonString = """{"byte1":"null","byte2":"null"}"""
+        data = fromJson(jsonString,PrimitiveByteData::class.java)
+        assertEquals(0.toByte(),data.byte1)
+        assertEquals(0.toByte(),data.byte2)
+
+        jsonString = """{"byte1":"","byte2":""}"""
+        data = fromJson(jsonString,PrimitiveByteData::class.java)
+        assertEquals(0.toByte(),data.byte1)
+        assertEquals(0.toByte(),data.byte2)
+
+        jsonString = """{"byte1":"as","byte2":"df"}"""
+        data = fromJson(jsonString,PrimitiveByteData::class.java)
+        assertEquals(0.toByte(),data.byte1)
+        assertEquals(0.toByte(),data.byte2)
+
+        jsonString = """{"byte1":"100","byte2":"100"}"""
+        data = fromJson(jsonString,PrimitiveByteData::class.java)
+        assertEquals(100.toByte(),data.byte1)
+        assertEquals(100.toByte(),data.byte2)
+
+        jsonString = """{"byte1":55,"byte2":55}"""
+        data = fromJson(jsonString,PrimitiveByteData::class.java)
+        assertEquals(55.toByte(),data.byte1)
+        assertEquals(55.toByte(),data.byte2)
+
+        jsonString = """{"byte1":128,"byte2":128}"""
+        data = fromJson(jsonString,PrimitiveByteData::class.java)
+        assertEquals((-128).toByte(),data.byte1)
+        assertEquals((-128).toByte(),data.byte2)
+    }
 
     val gson = newGson()
 

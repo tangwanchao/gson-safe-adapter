@@ -20,26 +20,29 @@ import java.math.BigInteger
 object GsonTypeAdapters {
     //<editor-fold desc="boolean">
     val BOOLEAN = object : TypeAdapter<Boolean>() {
-        override fun write(out: JsonWriter, value: Boolean) {
-            out.value(value)
+
+        val defaultValue = false
+
+        override fun write(writer: JsonWriter, value: Boolean) {
+            writer.value(value)
         }
 
-        override fun read(read: JsonReader): Boolean {
-            return when (read.peek()) {
+        override fun read(reader: JsonReader): Boolean {
+            return when (reader.peek()) {
                 JsonToken.NULL -> {
-                    read.nextNull()
-                    false
+                    reader.nextNull()
+                    defaultValue
                 }
                 JsonToken.STRING -> {
-                    read.nextString()?.toBoolean() ?: false
+                    reader.nextString()?.toBoolean() ?: defaultValue
                 }
                 else -> {
                     try {
-                        read.nextBoolean()
+                        reader.nextBoolean()
                     } catch (th: Throwable) {
                         logD("BooleanTypeAdapter read err", th)
-                        read.skipValue()
-                        false
+                        reader.skipValue()
+                        defaultValue
                     }
                 }
             }
@@ -47,9 +50,42 @@ object GsonTypeAdapters {
     }
 
     val BOOLEAN_FACTORY: TypeAdapterFactory = TypeAdapters.newFactory(
-        java.lang.Boolean.TYPE,
-        Boolean::class.java,
+        Boolean::class.javaPrimitiveType,
+        Boolean::class.javaObjectType,
         BOOLEAN
+    )
+    //</editor-fold>
+
+    //<editor-fold desc="byte">
+    val BYTE = object : TypeAdapter<Number>() {
+
+        val defaultValue: Byte = 0
+
+        override fun write(writer: JsonWriter, value: Number) {
+            writer.value(value)
+        }
+
+        override fun read(reader: JsonReader): Number {
+                return when (reader.peek()) {
+                    JsonToken.NULL -> {
+                        reader.nextNull()
+                        defaultValue
+                    }
+                    else -> try {
+                        reader.nextInt().toByte()
+                    } catch (th: Throwable) {
+                        logD("ByteTypeAdapter read err", th)
+                        reader.skipValue()
+                        defaultValue
+                    }
+                }
+        }
+    }
+
+    val BYTE_FACTORY: TypeAdapterFactory = TypeAdapters.newFactory(
+        Byte::class.javaPrimitiveType,
+        Byte::class.javaObjectType,
+        BYTE
     )
     //</editor-fold>
 }
