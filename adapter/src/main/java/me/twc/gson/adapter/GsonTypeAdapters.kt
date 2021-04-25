@@ -151,7 +151,9 @@ object GsonTypeAdapters {
         Long::class.javaObjectType,
         LONG
     )
+    //</editor-fold>
 
+    //<editor-fold desc="float">
     val FLOAT = object : TypeAdapter<Number>() {
         override fun write(out: JsonWriter, value: Number) {
             out.value(value)
