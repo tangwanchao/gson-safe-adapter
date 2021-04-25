@@ -202,22 +202,6 @@ object GsonTypeAdapters {
     //</editor-fold>
 }
 
-class LongTypeAdapter : TypeAdapter<Number>() {
-    override fun write(out: JsonWriter, value: Number) {
-        out.value(value)
-    }
-
-    override fun read(read: JsonReader): Number {
-        return try {
-            read.nextLong()
-        } catch (th: Throwable) {
-            logD("LongTypeAdapter read err", th)
-            read.skipValue()
-            0L
-        }
-    }
-}
-
 class StringTypeAdapter : TypeAdapter<String>() {
     override fun write(out: JsonWriter, value: String) {
         out.value(value)
