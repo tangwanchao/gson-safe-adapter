@@ -10,10 +10,12 @@ import com.google.gson.TypeAdapterFactory
 fun GsonBuilder.registerSafeTypeAdapters(
     booleanAdapterFactory: TypeAdapterFactory = GsonTypeAdapters.BOOLEAN_FACTORY,
     byteAdapterFactory: TypeAdapterFactory = GsonTypeAdapters.BYTE_FACTORY,
-    shortAdapterFactory: TypeAdapterFactory = GsonTypeAdapters.SHORT_FACTORY
+    shortAdapterFactory: TypeAdapterFactory = GsonTypeAdapters.SHORT_FACTORY,
+    integerAdapterFactory: TypeAdapterFactory = GsonTypeAdapters.INTEGER_FACTORY
 ): GsonBuilder {
     registerTypeAdapterFactory(booleanAdapterFactory)
     registerTypeAdapterFactory(byteAdapterFactory)
     registerTypeAdapterFactory(shortAdapterFactory)
+    registerTypeAdapterFactory(integerAdapterFactory)
     return this
 }

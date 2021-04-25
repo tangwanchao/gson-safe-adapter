@@ -107,6 +107,7 @@ object GsonTypeAdapters {
                 else -> try {
                     reader.nextInt().toShort()
                 } catch (th: Throwable) {
+                    logD("ShortTypeAdapter read err", th)
                     reader.skipValue()
                     defaultValue
                 }
@@ -118,6 +119,30 @@ object GsonTypeAdapters {
         Short::class.javaPrimitiveType,
         Short::class.javaObjectType,
         SHORT
+    )
+    //</editor-fold>
+
+    //<editor-fold desc="integer">
+    val INTEGER = object : TypeAdapter<Number>() {
+        override fun write(out: JsonWriter, value: Number) {
+            out.value(value)
+        }
+
+        override fun read(read: JsonReader): Int {
+            return try {
+                read.nextInt()
+            } catch (th: Throwable) {
+                logD("IntTypeAdapter read err", th)
+                read.skipValue()
+                0
+            }
+        }
+    }
+
+    val INTEGER_FACTORY: TypeAdapterFactory = TypeAdapters.newFactory(
+        Int::class.javaPrimitiveType,
+        Int::class.javaObjectType,
+        INTEGER
     )
     //</editor-fold>
 }
@@ -167,22 +192,6 @@ class DoubleTypeAdapter : TypeAdapter<Number>() {
             logD("DoubleTypeAdapter read err", th)
             read.skipValue()
             0.0
-        }
-    }
-}
-
-class IntTypeAdapter : TypeAdapter<Number>() {
-    override fun write(out: JsonWriter, value: Number) {
-        out.value(value)
-    }
-
-    override fun read(read: JsonReader): Int {
-        return try {
-            read.nextInt()
-        } catch (th: Throwable) {
-            logD("IntTypeAdapter read err", th)
-            read.skipValue()
-            0
         }
     }
 }

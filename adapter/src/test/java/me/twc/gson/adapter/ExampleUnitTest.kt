@@ -163,6 +163,44 @@ class ExampleUnitTest {
         assertEquals((-32768).toShort(), data.short2)
     }
 
+    @Test
+    fun integerTest() {
+        var jsonString = """{"int1":null,"int2":null}"""
+        var data = fromJson<IntData>(jsonString, IntData::class.java)
+        assertEquals(0, data.int1)
+        assertEquals(0, data.int2)
+
+        jsonString = """{"int1":"null","int2":"null"}"""
+        data = fromJson(jsonString, IntData::class.java)
+        assertEquals(0, data.int1)
+        assertEquals(0, data.int2)
+
+        jsonString = """{"int1":"","int2":""}"""
+        data = fromJson(jsonString, IntData::class.java)
+        assertEquals(0, data.int1)
+        assertEquals(0, data.int2)
+
+        jsonString = """{"int1":"abc","int2":"abc"}"""
+        data = fromJson(jsonString, IntData::class.java)
+        assertEquals(0, data.int1)
+        assertEquals(0, data.int2)
+
+        jsonString = """{"int1":"123","int2":"123"}"""
+        data = fromJson(jsonString, IntData::class.java)
+        assertEquals(123, data.int1)
+        assertEquals(123, data.int2)
+
+        jsonString = """{"int1":123,"int2":123}"""
+        data = fromJson(jsonString, IntData::class.java)
+        assertEquals(123, data.int1)
+        assertEquals(123, data.int2)
+
+        jsonString = """{"int1":2147483648,"int2":2147483648}"""
+        data = fromJson(jsonString, IntData::class.java)
+        assertEquals(0, data.int1)
+        assertEquals(0, data.int2)
+    }
+
     val gson = newGson()
 
     private inline fun <reified T> fromJson(jsonString: String, type: Type = T::class.java): T {
