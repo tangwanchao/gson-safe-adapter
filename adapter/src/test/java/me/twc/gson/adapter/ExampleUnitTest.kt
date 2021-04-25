@@ -475,6 +475,84 @@ class ExampleUnitTest {
         assertEquals("""{"builder1":"null","builder2":"null"}""",outJsonString)
     }
 
+    @Test
+    fun stringBuffer() {
+        var jsonString = """{"buffer1":null,"buffer2":null}"""
+        var data = fromJson<StringBufferData>(jsonString, StringBufferData::class.java,false)
+        assertEquals("", data.buffer1.toString())
+        assertEquals("", data.buffer2.toString())
+
+        jsonString = """{"buffer1":"null","buffer2":"null"}"""
+        data = fromJson(jsonString, StringBufferData::class.java,false)
+        assertEquals("", data.buffer1.toString())
+        assertEquals("", data.buffer2.toString())
+
+        jsonString = """{"buffer1":"Null","buffer2":"nUll"}"""
+        data = fromJson(jsonString, StringBufferData::class.java,false)
+        assertEquals("", data.buffer1.toString())
+        assertEquals("", data.buffer2.toString())
+
+        jsonString = """{"buffer1":"","buffer2":""}"""
+        data = fromJson(jsonString, StringBufferData::class.java,false)
+        assertEquals("", data.buffer1.toString())
+        assertEquals("", data.buffer2.toString())
+
+        jsonString = """{"buffer1":"123","buffer2":123}"""
+        data = fromJson(jsonString, StringBufferData::class.java,false)
+        assertEquals("123", data.buffer1.toString())
+        assertEquals("123", data.buffer2.toString())
+
+        jsonString = """{"buffer1":"abc","buffer2":"abc"}"""
+        data = fromJson(jsonString, StringBufferData::class.java,false)
+        assertEquals("abc", data.buffer1.toString())
+        assertEquals("abc", data.buffer2.toString())
+
+        val outData = StringBufferData()
+        outData.buffer1 = StringBuffer("null")
+        outData.buffer2 = StringBuffer("null")
+        val outJsonString = gson.toJson(outData)
+        assertEquals("""{"buffer1":"","buffer2":""}""",outJsonString)
+    }
+
+    @Test
+    fun stringBufferIncludeNullString() {
+        var jsonString = """{"buffer1":null,"buffer2":null}"""
+        var data = fromJson<StringBufferData>(jsonString, StringBufferData::class.java,true)
+        assertEquals("", data.buffer1.toString())
+        assertEquals("", data.buffer2.toString())
+
+        jsonString = """{"buffer1":"null","buffer2":"null"}"""
+        data = fromJson(jsonString, StringBufferData::class.java,true)
+        assertEquals("null", data.buffer1.toString())
+        assertEquals("null", data.buffer2.toString())
+
+        jsonString = """{"buffer1":"Null","buffer2":"nUll"}"""
+        data = fromJson(jsonString, StringBufferData::class.java,true)
+        assertEquals("Null", data.buffer1.toString())
+        assertEquals("nUll", data.buffer2.toString())
+
+        jsonString = """{"buffer1":"","buffer2":""}"""
+        data = fromJson(jsonString, StringBufferData::class.java,true)
+        assertEquals("", data.buffer1.toString())
+        assertEquals("", data.buffer2.toString())
+
+        jsonString = """{"buffer1":"123","buffer2":123}"""
+        data = fromJson(jsonString, StringBufferData::class.java,true)
+        assertEquals("123", data.buffer1.toString())
+        assertEquals("123", data.buffer2.toString())
+
+        jsonString = """{"buffer1":"abc","buffer2":"abc"}"""
+        data = fromJson(jsonString, StringBufferData::class.java,true)
+        assertEquals("abc", data.buffer1.toString())
+        assertEquals("abc", data.buffer2.toString())
+
+        val outData = StringBufferData()
+        outData.buffer1 = StringBuffer("null")
+        outData.buffer2 = StringBuffer("null")
+        val outJsonString = gsonIncludeNullString.toJson(outData)
+        assertEquals("""{"buffer1":"null","buffer2":"null"}""",outJsonString)
+    }
+
     val gson = newGson()
     val gsonIncludeNullString = newGson(true)
 
@@ -494,10 +572,14 @@ class ExampleUnitTest {
         val stringBuilderFactory = if(includeNullString){
             GsonTypeAdapters.STRING_BUILDER_INCLUDE_NULL_STRING_FACTORY
         } else GsonTypeAdapters.STRING_BUILDER_FACTORY
+        val stringBufferFactory = if(includeNullString){
+            GsonTypeAdapters.STRING_BUFFER_INCLUDE_NULL_STRING_FACTORY
+        } else GsonTypeAdapters.STRING_BUFFER_FACTORY
         return Gson().newBuilder()
             .registerSafeTypeAdapters(
                 stringAdapterFactory = stringFactory,
-                stringBuilderFactory = stringBuilderFactory
+                stringBuilderFactory = stringBuilderFactory,
+                stringBufferFactory = stringBufferFactory
             )
             .create()
     }

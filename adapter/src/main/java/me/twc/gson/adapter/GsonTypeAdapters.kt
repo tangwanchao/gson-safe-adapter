@@ -242,6 +242,7 @@ object GsonTypeAdapters {
     //</editor-fold>
 
     //<editor-fold desc="others">
+
     //<editor-fold desc="StringBuilder">
     class StringBuilderAdapter(
         private val includeNullString: Boolean = false
@@ -268,7 +269,37 @@ object GsonTypeAdapters {
         StringBuilder::class.java,
         STRING_BUILDER_INCLUDE_NULL_STRING
     )
+
     //</editor-fold>
+    class StringBufferAdapter(
+        private val includeNullString: Boolean = false
+    ) : TypeAdapter<StringBuffer>() {
+        override fun write(writer: JsonWriter, value: StringBuffer) {
+            val stringAdapter = if (includeNullString) STRING_INCLUDE_NULL_STRING else STRING
+            stringAdapter.write(writer, value.toString())
+        }
+
+        override fun read(reader: JsonReader): StringBuffer {
+            val stringAdapter = if (includeNullString) STRING_INCLUDE_NULL_STRING else STRING
+            return StringBuffer(stringAdapter.read(reader))
+        }
+    }
+
+    val STRING_BUFFER = StringBufferAdapter(includeNullString = false)
+    val STRING_BUFFER_FACTORY: TypeAdapterFactory = TypeAdapters.newFactory(
+        StringBuffer::class.java,
+        STRING_BUFFER
+    )
+
+    val STRING_BUFFER_INCLUDE_NULL_STRING = StringBufferAdapter(includeNullString = true)
+    val STRING_BUFFER_INCLUDE_NULL_STRING_FACTORY: TypeAdapterFactory = TypeAdapters.newFactory(
+        StringBuffer::class.java,
+        STRING_BUFFER_INCLUDE_NULL_STRING
+    )
+    //<editor-fold desc="StringBuffer">
+
+    //</editor-fold>
+
     //</editor-fold>
 }
 
