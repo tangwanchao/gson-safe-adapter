@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import org.junit.Test
 
 import org.junit.Assert.*
+import java.lang.StringBuilder
 import java.lang.reflect.Type
 
 /**
@@ -349,6 +350,12 @@ class ExampleUnitTest {
         data = fromJson(jsonString, StringData::class.java)
         assertEquals("abc", data.string1)
         assertEquals("abc", data.string2)
+
+        val outData = StringData()
+        outData.string1 = "null"
+        outData.string2 = "null"
+        val outJsonString = gson.toJson(outData)
+        assertEquals("""{"string1":"","string2":""}""",outJsonString)
     }
 
     @Test
@@ -382,6 +389,12 @@ class ExampleUnitTest {
         data = fromJson(jsonString, StringData::class.java,true)
         assertEquals("abc", data.string1)
         assertEquals("abc", data.string2)
+
+        val outData = StringData()
+        outData.string1 = "null"
+        outData.string2 = "null"
+        val outJsonString = gsonIncludeNullString.toJson(outData)
+        assertEquals("""{"string1":"null","string2":"null"}""",outJsonString)
     }
 
     @Test
@@ -415,6 +428,12 @@ class ExampleUnitTest {
         data = fromJson(jsonString, StringBuilderData::class.java,false)
         assertEquals("abc", data.builder1.toString())
         assertEquals("abc", data.builder2.toString())
+
+        val outData = StringBuilderData()
+        outData.builder1 = StringBuilder("null")
+        outData.builder2 = StringBuilder("null")
+        val outJsonString = gson.toJson(outData)
+        assertEquals("""{"builder1":"","builder2":""}""",outJsonString)
     }
 
     @Test
@@ -448,6 +467,12 @@ class ExampleUnitTest {
         data = fromJson(jsonString, StringBuilderData::class.java,true)
         assertEquals("abc", data.builder1.toString())
         assertEquals("abc", data.builder2.toString())
+
+        val outData = StringBuilderData()
+        outData.builder1 = StringBuilder("null")
+        outData.builder2 = StringBuilder("null")
+        val outJsonString = gsonIncludeNullString.toJson(outData)
+        assertEquals("""{"builder1":"null","builder2":"null"}""",outJsonString)
     }
 
     val gson = newGson()

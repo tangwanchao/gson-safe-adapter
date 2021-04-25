@@ -207,7 +207,11 @@ object GsonTypeAdapters {
         private val includeNullString: Boolean = false
     ) : TypeAdapter<String>() {
         override fun write(out: JsonWriter, value: String) {
-            out.value(value)
+            if (includeNullString) {
+                out.value(value)
+            } else {
+                out.value(if (value.equals("null", true)) "" else value)
+            }
         }
 
         override fun read(read: JsonReader): String {
@@ -243,7 +247,9 @@ object GsonTypeAdapters {
         private val includeNullString: Boolean = false
     ) : TypeAdapter<StringBuilder>() {
         override fun write(writer: JsonWriter, value: StringBuilder?) {
-            writer.value(value?.toString() ?: "")
+            if (value == null) writer.value("")
+            val stringAdapter = if (includeNullString) STRING_INCLUDE_NULL_STRING else STRING
+            stringAdapter.write(writer, value?.toString() ?: "")
         }
 
         override fun read(reader: JsonReader): StringBuilder {
