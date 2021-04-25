@@ -128,6 +128,30 @@ object GsonTypeAdapters {
         INTEGER
     )
     //</editor-fold>
+
+    //<editor-fold desc="long">
+    val LONG = object : TypeAdapter<Number>() {
+        override fun write(out: JsonWriter, value: Number) {
+            out.value(value)
+        }
+
+        override fun read(read: JsonReader): Number {
+            return try {
+                read.nextLong()
+            } catch (th: Throwable) {
+                logD("LongTypeAdapter read err", th)
+                read.skipValue()
+                0L
+            }
+        }
+    }
+
+    val LONG_FACTORY: TypeAdapterFactory = TypeAdapters.newFactory(
+        Long::class.javaPrimitiveType,
+        Long::class.javaObjectType,
+        LONG
+    )
+    //</editor-fold>
 }
 
 class LongTypeAdapter : TypeAdapter<Number>() {
