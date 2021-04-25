@@ -239,6 +239,44 @@ class ExampleUnitTest {
         assertEquals(0L,data.long2)
     }
 
+    @Test
+    fun floatTest() {
+        var jsonString = """{"float1":null,"float2":null}"""
+        var data = fromJson<FloatData>(jsonString,FloatData::class.java)
+        assertEquals(0f,data.float1)
+        assertEquals(0f,data.float2)
+
+        jsonString = """{"float1":"null","float2":"null"}"""
+        data = fromJson(jsonString,FloatData::class.java)
+        assertEquals(0f,data.float1)
+        assertEquals(0f,data.float2)
+
+        jsonString = """{"float1":"","float2":""}"""
+        data = fromJson(jsonString,FloatData::class.java)
+        assertEquals(0f,data.float1)
+        assertEquals(0f,data.float2)
+
+        jsonString = """{"float1":"abc","float2":"abc"}"""
+        data = fromJson(jsonString,FloatData::class.java)
+        assertEquals(0f,data.float1)
+        assertEquals(0f,data.float2)
+
+        jsonString = """{"float1":"123.123","float2":"123.123"}"""
+        data = fromJson(jsonString,FloatData::class.java)
+        assertEquals(123.123f,data.float1)
+        assertEquals(123.123f,data.float2)
+
+        jsonString = """{"float1":123.123,"float2":123.123}"""
+        data = fromJson(jsonString,FloatData::class.java)
+        assertEquals(123.123f,data.float1)
+        assertEquals(123.123f,data.float2)
+
+        jsonString = """{"float1":192233721922337203685477589019223372036854775890036854775890.333,"float2":191921922337203685477589023372036854775890223372036854775890.333}"""
+        data = fromJson(jsonString,FloatData::class.java)
+        assertEquals(Float.POSITIVE_INFINITY,data.float1)
+        assertEquals(Float.POSITIVE_INFINITY,data.float2)
+    }
+
     val gson = newGson()
 
     private inline fun <reified T> fromJson(jsonString: String, type: Type = T::class.java): T {

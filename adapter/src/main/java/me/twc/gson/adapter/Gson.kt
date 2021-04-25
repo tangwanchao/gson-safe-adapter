@@ -12,12 +12,14 @@ fun GsonBuilder.registerSafeTypeAdapters(
     byteAdapterFactory: TypeAdapterFactory = GsonTypeAdapters.BYTE_FACTORY,
     shortAdapterFactory: TypeAdapterFactory = GsonTypeAdapters.SHORT_FACTORY,
     integerAdapterFactory: TypeAdapterFactory = GsonTypeAdapters.INTEGER_FACTORY,
-    longAdapterFactory: TypeAdapterFactory = GsonTypeAdapters.LONG_FACTORY
+    longAdapterFactory: TypeAdapterFactory = GsonTypeAdapters.LONG_FACTORY,
+    floatAdapterFactory: TypeAdapterFactory = GsonTypeAdapters.FLOAT_FACTORY
 ): GsonBuilder {
     registerTypeAdapterFactory(booleanAdapterFactory)
     registerTypeAdapterFactory(byteAdapterFactory)
     registerTypeAdapterFactory(shortAdapterFactory)
     registerTypeAdapterFactory(integerAdapterFactory)
     registerTypeAdapterFactory(longAdapterFactory)
+    registerTypeAdapterFactory(floatAdapterFactory)
     return this
 }
