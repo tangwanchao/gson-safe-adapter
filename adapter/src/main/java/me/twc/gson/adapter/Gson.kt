@@ -46,3 +46,17 @@ fun GsonBuilder.registerSafeTypeAdapters(
     registerTypeAdapterFactory(arrayTypeAdapterFactory)
     return this
 }
+
+/**
+ * 特定于中国风格的 Adapters
+ *
+ * 格式:
+ * Data --- 2021-4-26 19:35:09
+ *
+ */
+fun GsonBuilder.registerSafeChinaStyleTypeAdapters(
+    dateTypeAdapterFactory: TypeAdapterFactory = GsonTypeAdapters.DATE_CHINA_MEDIUM_FACTORY
+): GsonBuilder {
+    registerTypeAdapterFactory(dateTypeAdapterFactory)
+    return this
+}

@@ -357,5 +357,9 @@ object GsonTypeAdapters {
     val ARRAY_FACTORY: TypeAdapterFactory = ArrayTypeAdapter.FACTORY
     //</editor-fold>
 
+    //<editor-fold desc="Data">
+    val DATE_CHINA_MEDIUM_FACTORY: TypeAdapterFactory = ChinaMediumDateTypeAdapter.FACTORY
+    //</editor-fold>
+
     //</editor-fold>
 }

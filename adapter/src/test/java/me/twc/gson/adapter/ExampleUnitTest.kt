@@ -6,7 +6,8 @@ import org.junit.Test
 import org.junit.Assert.*
 import java.lang.StringBuilder
 import java.lang.reflect.Type
-import java.math.BigDecimal
+import java.text.DateFormat
+import java.util.*
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -758,6 +759,51 @@ class ExampleUnitTest {
         assertEquals(2,data.arr2.size)
     }
 
+    @Test
+    fun dateTest() {
+        val formatter = DateFormat.getDateTimeInstance(
+            DateFormat.MEDIUM,
+            DateFormat.MEDIUM,
+            Locale.CHINA
+        )
+
+        var jsonString = """{"date1":null,"date2":null}"""
+        var data = fromJson<DateData>(jsonString)
+        assertTrue(System.currentTimeMillis() - data.date1.time < 1000L)
+        assertTrue(System.currentTimeMillis() - data.date2.time < 1000L)
+
+        jsonString = """{"date1":"null","date2":"null"}"""
+        data = fromJson(jsonString)
+        assertTrue(System.currentTimeMillis() - data.date1.time < 1000L)
+        assertTrue(System.currentTimeMillis() - data.date2.time < 1000L)
+
+        jsonString = """{"date1":"","date2":""}"""
+        data = fromJson(jsonString)
+        assertTrue(System.currentTimeMillis() - data.date1.time < 1000L)
+        assertTrue(System.currentTimeMillis() - data.date2.time < 1000L)
+
+        jsonString = """{"date1":"ads","date2":"fdsa"}"""
+        data = fromJson(jsonString)
+        assertTrue(System.currentTimeMillis() - data.date1.time < 1000L)
+        assertTrue(System.currentTimeMillis() - data.date2.time < 1000L)
+
+        jsonString = """{"date1":"2021-4-26 19:35:09","date2":"2021-4-26 19:35:09"}"""
+        data = fromJson(jsonString)
+        assertEquals(formatter.parse("2021-4-26 19:35:09"),data.date1)
+        assertEquals(formatter.parse("2021-4-26 19:35:09"),data.date2)
+
+        var outJsonString = gson.toJson(data)
+        assertEquals("""{"date1":"2021-4-26 19:35:09","date2":"2021-4-26 19:35:09"}""",outJsonString)
+
+        val outData = DateData()
+        outJsonString = gson.toJson(outData)
+        data = fromJson(outJsonString)
+        val currentTimeMillis = System.currentTimeMillis()
+        assertTrue(currentTimeMillis - data.date1.time < 1000L)
+        assertTrue(currentTimeMillis - data.date2.time < 1000L)
+
+    }
+
     val gson = newGson()
     val gsonIncludeNullString = newGson(true)
 
@@ -786,6 +832,7 @@ class ExampleUnitTest {
                 stringBuilderFactory = stringBuilderFactory,
                 stringBufferFactory = stringBufferFactory
             )
+            .registerSafeChinaStyleTypeAdapters()
             .create()
     }
 }
