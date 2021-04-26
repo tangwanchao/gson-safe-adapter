@@ -353,5 +353,9 @@ object GsonTypeAdapters {
     val COLLECTION_ADAPTER_FACTORY = CollectionTypeAdapterFactory(ConstructorConstructor(mapOf()))
     //</editor-fold>
 
+    //<editor-fold desc="Array">
+    val ARRAY_FACTORY: TypeAdapterFactory = ArrayTypeAdapter.FACTORY
+    //</editor-fold>
+
     //</editor-fold>
 }

@@ -663,33 +663,99 @@ class ExampleUnitTest {
     @Test
     fun collectionTest() {
         var jsonString = """{"arr1":null,"arr2":null}"""
-        var data = fromJson<CollectionData>(jsonString,CollectionData::class.java)
+        var data = fromJson<CollectionData>(jsonString, CollectionData::class.java)
+        assertEquals(0, data.arr1.size)
+        assertEquals(0, data.arr2.size)
+
+        jsonString = """{"arr1":"null","arr2":"null"}"""
+        data = fromJson(jsonString, CollectionData::class.java)
+        assertEquals(0, data.arr1.size)
+        assertEquals(0, data.arr2.size)
+
+        jsonString = """{"arr1":"","arr2":""}"""
+        data = fromJson(jsonString, CollectionData::class.java)
+        assertEquals(0, data.arr1.size)
+        assertEquals(0, data.arr2.size)
+
+        jsonString = """{"arr1":[],"arr2":[]}"""
+        data = fromJson(jsonString, CollectionData::class.java)
+        assertEquals(0, data.arr1.size)
+        assertEquals(0, data.arr2.size)
+
+        jsonString = """{"arr1":["a","b"],"arr2":["c","d"]}"""
+        data = fromJson(jsonString, CollectionData::class.java)
+        assertEquals(2, data.arr1.size)
+        assertEquals(2, data.arr2.size)
+
+        val outData = CollectionData()
+        val outJsonString = gson.toJson(outData)
+        assertEquals("""{"arr1":[],"arr2":[]}""", outJsonString)
+    }
+
+    @Test
+    fun arrayTest() {
+        var jsonString = """{"arr1":null,"arr2":null}"""
+        var data = fromJson<ArrayData>(jsonString)
         assertEquals(0,data.arr1.size)
         assertEquals(0,data.arr2.size)
 
         jsonString = """{"arr1":"null","arr2":"null"}"""
-        data = fromJson(jsonString,CollectionData::class.java)
+        data = fromJson(jsonString)
         assertEquals(0,data.arr1.size)
         assertEquals(0,data.arr2.size)
 
         jsonString = """{"arr1":"","arr2":""}"""
-        data = fromJson(jsonString,CollectionData::class.java)
+        data = fromJson(jsonString)
+        assertEquals(0,data.arr1.size)
+        assertEquals(0,data.arr2.size)
+
+        jsonString = """{"arr1":"abc","arr2":"abc"}"""
+        data = fromJson(jsonString)
         assertEquals(0,data.arr1.size)
         assertEquals(0,data.arr2.size)
 
         jsonString = """{"arr1":[],"arr2":[]}"""
-        data = fromJson(jsonString,CollectionData::class.java)
+        data = fromJson(jsonString)
         assertEquals(0,data.arr1.size)
         assertEquals(0,data.arr2.size)
 
         jsonString = """{"arr1":["a","b"],"arr2":["c","d"]}"""
-        data = fromJson(jsonString,CollectionData::class.java)
+        data = fromJson(jsonString)
         assertEquals(2,data.arr1.size)
         assertEquals(2,data.arr2.size)
+    }
 
-        val outData = CollectionData()
-        val outJsonString = gson.toJson(outData)
-        assertEquals("""{"arr1":[],"arr2":[]}""",outJsonString)
+    @Test
+    fun kotlinArrayTest() {
+        var jsonString = """{"arr1":null,"arr2":null}"""
+        var data = fromJson<KotlinArrayData>(jsonString)
+        assertEquals(0,data.arr1.size)
+        assertEquals(0,data.arr2.size)
+
+        jsonString = """{"arr1":"null","arr2":"null"}"""
+        data = fromJson(jsonString)
+        assertEquals(0,data.arr1.size)
+        assertEquals(0,data.arr2.size)
+
+        jsonString = """{"arr1":"","arr2":""}"""
+        data = fromJson(jsonString)
+        assertEquals(0,data.arr1.size)
+        assertEquals(0,data.arr2.size)
+
+        jsonString = """{"arr1":"abc","arr2":"abc"}"""
+        data = fromJson(jsonString)
+        assertEquals(0,data.arr1.size)
+        assertEquals(0,data.arr2.size)
+
+        jsonString = """{"arr1":[],"arr2":[]}"""
+        data = fromJson(jsonString)
+        assertEquals(0,data.arr1.size)
+        assertEquals(0,data.arr2.size)
+
+        jsonString = """{"arr1":["a","b"],"arr2":["c","d"]}"""
+        data = fromJson(jsonString)
+        assertEquals(2,data.arr1.size)
+        assertEquals(2,data.arr2.size)
     }
 
     val gson = newGson()
