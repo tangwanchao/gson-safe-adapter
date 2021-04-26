@@ -6,6 +6,7 @@ import org.junit.Test
 import org.junit.Assert.*
 import java.lang.StringBuilder
 import java.lang.reflect.Type
+import java.math.BigDecimal
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -594,6 +595,67 @@ class ExampleUnitTest {
         val outString = gson.toJson(data)
         assertEquals(
             """{"big1":"123456789123456789123456789123456789","big2":"123456789123456789123456789123456789"}""",
+            outString
+        )
+    }
+
+    @Test
+    fun bigDecimalTest() {
+        var jsonString = """{"big1":null,"big2":null}"""
+        var data = fromJson<BigDecimalData>(jsonString, BigDecimalData::class.java)
+        assertEquals("0.0", data.big1.toPlainString())
+        assertEquals("0.0", data.big2.toPlainString())
+
+        jsonString = """{"big1":"null","big2":"null"}"""
+        data = fromJson(jsonString, BigDecimalData::class.java)
+        assertEquals("0.0", data.big1.toPlainString())
+        assertEquals("0.0", data.big2.toPlainString())
+
+        jsonString = """{"big1":"","big2":""}"""
+        data = fromJson(jsonString, BigDecimalData::class.java)
+        assertEquals("0.0", data.big1.toPlainString())
+        assertEquals("0.0", data.big2.toPlainString())
+
+        jsonString = """{"big1":"abc","big2":"abc"}"""
+        data = fromJson(jsonString, BigDecimalData::class.java)
+        assertEquals("0.0", data.big1.toPlainString())
+        assertEquals("0.0", data.big2.toPlainString())
+
+        jsonString = """{"big1":"123.456","big2":"123.456"}"""
+        data = fromJson(jsonString, BigDecimalData::class.java)
+        assertEquals("123.456", data.big1.toPlainString())
+        assertEquals("123.456", data.big2.toPlainString())
+
+        jsonString = """{"big1":"123.4560","big2":"123.4560"}"""
+        data = fromJson(jsonString, BigDecimalData::class.java)
+        assertEquals("123.4560", data.big1.toPlainString())
+        assertEquals("123.4560", data.big2.toPlainString())
+
+        jsonString = """{"big1":123.456,"big2":123.456}"""
+        data = fromJson(jsonString, BigDecimalData::class.java)
+        assertEquals("123.456", data.big1.toPlainString())
+        assertEquals("123.456", data.big2.toPlainString())
+
+        jsonString = """{"big1":123.4560,"big2":123.4560}"""
+        data = fromJson(jsonString, BigDecimalData::class.java)
+        assertEquals("123.4560", data.big1.toPlainString())
+        assertEquals("123.4560", data.big2.toPlainString())
+
+        jsonString =
+            """{"big1":123456789123456789123456789123456789123456789123456789.123456789123456789123456789123456789123456789123456789,"big2":123456789123456789123456789123456789123456789123456789.123456789123456789123456789123456789123456789123456789}"""
+        data = fromJson(jsonString, BigDecimalData::class.java)
+        assertEquals(
+            "123456789123456789123456789123456789123456789123456789.123456789123456789123456789123456789123456789123456789",
+            data.big1.toPlainString()
+        )
+        assertEquals(
+            "123456789123456789123456789123456789123456789123456789.123456789123456789123456789123456789123456789123456789",
+            data.big2.toPlainString()
+        )
+
+        val outString = gson.toJson(data)
+        assertEquals(
+            """{"big1":"123456789123456789123456789123456789123456789123456789.123456789123456789123456789123456789123456789123456789","big2":"123456789123456789123456789123456789123456789123456789.123456789123456789123456789123456789123456789123456789"}""",
             outString
         )
     }

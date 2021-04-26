@@ -310,6 +310,7 @@ object GsonTypeAdapters {
             return try {
                 BigInteger(read.nextString())
             } catch (th: Throwable) {
+                logD("BigIntegerTypeAdapter read err", th)
                 if (th !is NumberFormatException) {
                     read.skipValue()
                 }
@@ -323,32 +324,29 @@ object GsonTypeAdapters {
     )
     //</editor-fold>
 
-    //</editor-fold>
-}
+    //<editor-fold desc="BigDecimal">
+    val BIG_DECIMAL = object : TypeAdapter<BigDecimal>() {
+        override fun write(out: JsonWriter, value: BigDecimal) {
+            out.value(value.toPlainString())
+        }
 
-class BigDecimalTypeAdapter : TypeAdapter<BigDecimal>() {
-    override fun write(out: JsonWriter, value: BigDecimal) {
-        out.value(value)
-    }
-
-    override fun read(read: JsonReader): BigDecimal {
-        val defaultValue = BigDecimal.valueOf(0.0)
-        return when (read.peek()) {
-            JsonToken.NULL -> {
-                read.nextNull()
-                defaultValue
-            }
-            else -> {
-                try {
-                    BigDecimal(read.nextString())
-                } catch (th: Throwable) {
-                    logD("BooleanTypeAdapter read err", th)
-                    if (th !is NumberFormatException) {
-                        read.skipValue()
-                    }
-                    defaultValue
+        override fun read(read: JsonReader): BigDecimal {
+            return try {
+                BigDecimal(read.nextString())
+            } catch (th: Throwable) {
+                logD("BigDecimalTypeAdapter read err", th)
+                if (th !is NumberFormatException) {
+                    read.skipValue()
                 }
+                BigDecimal.valueOf(0.0)
             }
         }
     }
+    val BIG_DECIMAL_FACTORY: TypeAdapterFactory = TypeAdapters.newFactory(
+        BigDecimal::class.java,
+        BIG_DECIMAL
+    )
+    //</editor-fold>
+
+    //</editor-fold>
 }
