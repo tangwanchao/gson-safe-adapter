@@ -4,6 +4,7 @@ package me.twc.gson.adapter
 
 import com.google.gson.TypeAdapter
 import com.google.gson.TypeAdapterFactory
+import com.google.gson.internal.ConstructorConstructor
 import com.google.gson.internal.bind.TypeAdapters
 import com.google.gson.stream.JsonReader
 import com.google.gson.stream.JsonToken
@@ -346,6 +347,10 @@ object GsonTypeAdapters {
         BigDecimal::class.java,
         BIG_DECIMAL
     )
+    //</editor-fold>
+
+    //<editor-fold desc="Collection">
+    val COLLECTION_ADAPTER_FACTORY = CollectionTypeAdapterFactory(ConstructorConstructor(mapOf()))
     //</editor-fold>
 
     //</editor-fold>

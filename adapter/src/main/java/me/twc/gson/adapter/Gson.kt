@@ -26,7 +26,8 @@ fun GsonBuilder.registerSafeTypeAdapters(
     stringBuilderFactory: TypeAdapterFactory = GsonTypeAdapters.STRING_BUILDER_FACTORY,
     stringBufferFactory: TypeAdapterFactory = GsonTypeAdapters.STRING_BUFFER_FACTORY,
     bigIntegerFactory: TypeAdapterFactory = GsonTypeAdapters.BIG_INTEGER_FACTORY,
-    bigDecimalFactory: TypeAdapterFactory = GsonTypeAdapters.BIG_DECIMAL_FACTORY
+    bigDecimalFactory: TypeAdapterFactory = GsonTypeAdapters.BIG_DECIMAL_FACTORY,
+    collectionTypeAdapterFactory: TypeAdapterFactory = GsonTypeAdapters.COLLECTION_ADAPTER_FACTORY
 ): GsonBuilder {
     registerTypeAdapterFactory(booleanAdapterFactory)
     registerTypeAdapterFactory(byteAdapterFactory)
@@ -40,5 +41,6 @@ fun GsonBuilder.registerSafeTypeAdapters(
     registerTypeAdapterFactory(stringBufferFactory)
     registerTypeAdapterFactory(bigIntegerFactory)
     registerTypeAdapterFactory(bigDecimalFactory)
+    registerTypeAdapterFactory(collectionTypeAdapterFactory)
     return this
 }
