@@ -355,38 +355,38 @@ class ExampleUnitTest {
         outData.string1 = "null"
         outData.string2 = "null"
         val outJsonString = gson.toJson(outData)
-        assertEquals("""{"string1":"","string2":""}""",outJsonString)
+        assertEquals("""{"string1":"","string2":""}""", outJsonString)
     }
 
     @Test
     fun stringIncludeNullStringTest() {
         var jsonString = """{"string1":null,"string2":null}"""
-        var data = fromJson<StringData>(jsonString, StringData::class.java,true)
+        var data = fromJson<StringData>(jsonString, StringData::class.java, true)
         assertEquals("", data.string1)
         assertEquals("", data.string2)
 
         jsonString = """{"string1":"null","string2":"null"}"""
-        data = fromJson(jsonString, StringData::class.java,true)
+        data = fromJson(jsonString, StringData::class.java, true)
         assertEquals("null", data.string1)
         assertEquals("null", data.string2)
 
         jsonString = """{"string1":"Null","string2":"nUll"}"""
-        data = fromJson(jsonString, StringData::class.java,true)
+        data = fromJson(jsonString, StringData::class.java, true)
         assertEquals("Null", data.string1)
         assertEquals("nUll", data.string2)
 
         jsonString = """{"string1":"","string2":""}"""
-        data = fromJson(jsonString, StringData::class.java,true)
+        data = fromJson(jsonString, StringData::class.java, true)
         assertEquals("", data.string1)
         assertEquals("", data.string2)
 
         jsonString = """{"string1":"123","string2":123}"""
-        data = fromJson(jsonString, StringData::class.java,true)
+        data = fromJson(jsonString, StringData::class.java, true)
         assertEquals("123", data.string1)
         assertEquals("123", data.string2)
 
         jsonString = """{"string1":"abc","string2":"abc"}"""
-        data = fromJson(jsonString, StringData::class.java,true)
+        data = fromJson(jsonString, StringData::class.java, true)
         assertEquals("abc", data.string1)
         assertEquals("abc", data.string2)
 
@@ -394,38 +394,38 @@ class ExampleUnitTest {
         outData.string1 = "null"
         outData.string2 = "null"
         val outJsonString = gsonIncludeNullString.toJson(outData)
-        assertEquals("""{"string1":"null","string2":"null"}""",outJsonString)
+        assertEquals("""{"string1":"null","string2":"null"}""", outJsonString)
     }
 
     @Test
     fun stringBuilder() {
         var jsonString = """{"builder1":null,"builder2":null}"""
-        var data = fromJson<StringBuilderData>(jsonString, StringBuilderData::class.java,false)
+        var data = fromJson<StringBuilderData>(jsonString, StringBuilderData::class.java, false)
         assertEquals("", data.builder1.toString())
         assertEquals("", data.builder2.toString())
 
         jsonString = """{"builder1":"null","builder2":"null"}"""
-        data = fromJson(jsonString, StringBuilderData::class.java,false)
+        data = fromJson(jsonString, StringBuilderData::class.java, false)
         assertEquals("", data.builder1.toString())
         assertEquals("", data.builder2.toString())
 
         jsonString = """{"builder1":"Null","builder2":"nUll"}"""
-        data = fromJson(jsonString, StringBuilderData::class.java,false)
+        data = fromJson(jsonString, StringBuilderData::class.java, false)
         assertEquals("", data.builder1.toString())
         assertEquals("", data.builder2.toString())
 
         jsonString = """{"builder1":"","builder2":""}"""
-        data = fromJson(jsonString, StringBuilderData::class.java,false)
+        data = fromJson(jsonString, StringBuilderData::class.java, false)
         assertEquals("", data.builder1.toString())
         assertEquals("", data.builder2.toString())
 
         jsonString = """{"builder1":"123","builder2":123}"""
-        data = fromJson(jsonString, StringBuilderData::class.java,false)
+        data = fromJson(jsonString, StringBuilderData::class.java, false)
         assertEquals("123", data.builder1.toString())
         assertEquals("123", data.builder2.toString())
 
         jsonString = """{"builder1":"abc","builder2":"abc"}"""
-        data = fromJson(jsonString, StringBuilderData::class.java,false)
+        data = fromJson(jsonString, StringBuilderData::class.java, false)
         assertEquals("abc", data.builder1.toString())
         assertEquals("abc", data.builder2.toString())
 
@@ -433,38 +433,38 @@ class ExampleUnitTest {
         outData.builder1 = StringBuilder("null")
         outData.builder2 = StringBuilder("null")
         val outJsonString = gson.toJson(outData)
-        assertEquals("""{"builder1":"","builder2":""}""",outJsonString)
+        assertEquals("""{"builder1":"","builder2":""}""", outJsonString)
     }
 
     @Test
     fun stringBuilderIncludeNullString() {
         var jsonString = """{"builder1":null,"builder2":null}"""
-        var data = fromJson<StringBuilderData>(jsonString, StringBuilderData::class.java,true)
+        var data = fromJson<StringBuilderData>(jsonString, StringBuilderData::class.java, true)
         assertEquals("", data.builder1.toString())
         assertEquals("", data.builder2.toString())
 
         jsonString = """{"builder1":"null","builder2":"null"}"""
-        data = fromJson(jsonString, StringBuilderData::class.java,true)
+        data = fromJson(jsonString, StringBuilderData::class.java, true)
         assertEquals("null", data.builder1.toString())
         assertEquals("null", data.builder2.toString())
 
         jsonString = """{"builder1":"Null","builder2":"nUll"}"""
-        data = fromJson(jsonString, StringBuilderData::class.java,true)
+        data = fromJson(jsonString, StringBuilderData::class.java, true)
         assertEquals("Null", data.builder1.toString())
         assertEquals("nUll", data.builder2.toString())
 
         jsonString = """{"builder1":"","builder2":""}"""
-        data = fromJson(jsonString, StringBuilderData::class.java,true)
+        data = fromJson(jsonString, StringBuilderData::class.java, true)
         assertEquals("", data.builder1.toString())
         assertEquals("", data.builder2.toString())
 
         jsonString = """{"builder1":"123","builder2":123}"""
-        data = fromJson(jsonString, StringBuilderData::class.java,true)
+        data = fromJson(jsonString, StringBuilderData::class.java, true)
         assertEquals("123", data.builder1.toString())
         assertEquals("123", data.builder2.toString())
 
         jsonString = """{"builder1":"abc","builder2":"abc"}"""
-        data = fromJson(jsonString, StringBuilderData::class.java,true)
+        data = fromJson(jsonString, StringBuilderData::class.java, true)
         assertEquals("abc", data.builder1.toString())
         assertEquals("abc", data.builder2.toString())
 
@@ -472,38 +472,38 @@ class ExampleUnitTest {
         outData.builder1 = StringBuilder("null")
         outData.builder2 = StringBuilder("null")
         val outJsonString = gsonIncludeNullString.toJson(outData)
-        assertEquals("""{"builder1":"null","builder2":"null"}""",outJsonString)
+        assertEquals("""{"builder1":"null","builder2":"null"}""", outJsonString)
     }
 
     @Test
     fun stringBuffer() {
         var jsonString = """{"buffer1":null,"buffer2":null}"""
-        var data = fromJson<StringBufferData>(jsonString, StringBufferData::class.java,false)
+        var data = fromJson<StringBufferData>(jsonString, StringBufferData::class.java, false)
         assertEquals("", data.buffer1.toString())
         assertEquals("", data.buffer2.toString())
 
         jsonString = """{"buffer1":"null","buffer2":"null"}"""
-        data = fromJson(jsonString, StringBufferData::class.java,false)
+        data = fromJson(jsonString, StringBufferData::class.java, false)
         assertEquals("", data.buffer1.toString())
         assertEquals("", data.buffer2.toString())
 
         jsonString = """{"buffer1":"Null","buffer2":"nUll"}"""
-        data = fromJson(jsonString, StringBufferData::class.java,false)
+        data = fromJson(jsonString, StringBufferData::class.java, false)
         assertEquals("", data.buffer1.toString())
         assertEquals("", data.buffer2.toString())
 
         jsonString = """{"buffer1":"","buffer2":""}"""
-        data = fromJson(jsonString, StringBufferData::class.java,false)
+        data = fromJson(jsonString, StringBufferData::class.java, false)
         assertEquals("", data.buffer1.toString())
         assertEquals("", data.buffer2.toString())
 
         jsonString = """{"buffer1":"123","buffer2":123}"""
-        data = fromJson(jsonString, StringBufferData::class.java,false)
+        data = fromJson(jsonString, StringBufferData::class.java, false)
         assertEquals("123", data.buffer1.toString())
         assertEquals("123", data.buffer2.toString())
 
         jsonString = """{"buffer1":"abc","buffer2":"abc"}"""
-        data = fromJson(jsonString, StringBufferData::class.java,false)
+        data = fromJson(jsonString, StringBufferData::class.java, false)
         assertEquals("abc", data.buffer1.toString())
         assertEquals("abc", data.buffer2.toString())
 
@@ -511,38 +511,38 @@ class ExampleUnitTest {
         outData.buffer1 = StringBuffer("null")
         outData.buffer2 = StringBuffer("null")
         val outJsonString = gson.toJson(outData)
-        assertEquals("""{"buffer1":"","buffer2":""}""",outJsonString)
+        assertEquals("""{"buffer1":"","buffer2":""}""", outJsonString)
     }
 
     @Test
     fun stringBufferIncludeNullString() {
         var jsonString = """{"buffer1":null,"buffer2":null}"""
-        var data = fromJson<StringBufferData>(jsonString, StringBufferData::class.java,true)
+        var data = fromJson<StringBufferData>(jsonString, StringBufferData::class.java, true)
         assertEquals("", data.buffer1.toString())
         assertEquals("", data.buffer2.toString())
 
         jsonString = """{"buffer1":"null","buffer2":"null"}"""
-        data = fromJson(jsonString, StringBufferData::class.java,true)
+        data = fromJson(jsonString, StringBufferData::class.java, true)
         assertEquals("null", data.buffer1.toString())
         assertEquals("null", data.buffer2.toString())
 
         jsonString = """{"buffer1":"Null","buffer2":"nUll"}"""
-        data = fromJson(jsonString, StringBufferData::class.java,true)
+        data = fromJson(jsonString, StringBufferData::class.java, true)
         assertEquals("Null", data.buffer1.toString())
         assertEquals("nUll", data.buffer2.toString())
 
         jsonString = """{"buffer1":"","buffer2":""}"""
-        data = fromJson(jsonString, StringBufferData::class.java,true)
+        data = fromJson(jsonString, StringBufferData::class.java, true)
         assertEquals("", data.buffer1.toString())
         assertEquals("", data.buffer2.toString())
 
         jsonString = """{"buffer1":"123","buffer2":123}"""
-        data = fromJson(jsonString, StringBufferData::class.java,true)
+        data = fromJson(jsonString, StringBufferData::class.java, true)
         assertEquals("123", data.buffer1.toString())
         assertEquals("123", data.buffer2.toString())
 
         jsonString = """{"buffer1":"abc","buffer2":"abc"}"""
-        data = fromJson(jsonString, StringBufferData::class.java,true)
+        data = fromJson(jsonString, StringBufferData::class.java, true)
         assertEquals("abc", data.buffer1.toString())
         assertEquals("abc", data.buffer2.toString())
 
@@ -550,7 +550,52 @@ class ExampleUnitTest {
         outData.buffer1 = StringBuffer("null")
         outData.buffer2 = StringBuffer("null")
         val outJsonString = gsonIncludeNullString.toJson(outData)
-        assertEquals("""{"buffer1":"null","buffer2":"null"}""",outJsonString)
+        assertEquals("""{"buffer1":"null","buffer2":"null"}""", outJsonString)
+    }
+
+    @Test
+    fun bigIntegerTest() {
+        var jsonString = """{"big1":null,"big2":null}"""
+        var data = fromJson<BigIntegerData>(jsonString, BigIntegerData::class.java)
+        assertEquals(0, data.big1.toInt())
+        assertEquals(0, data.big2.toInt())
+
+        jsonString = """{"big1":"null","big2":"null"}"""
+        data = fromJson(jsonString, BigIntegerData::class.java)
+        assertEquals(0, data.big1.toInt())
+        assertEquals(0, data.big2.toInt())
+
+        jsonString = """{"big1":"","big2":""}"""
+        data = fromJson(jsonString, BigIntegerData::class.java)
+        assertEquals(0, data.big1.toInt())
+        assertEquals(0, data.big2.toInt())
+
+        jsonString = """{"big1":"abc","big2":"abc"}"""
+        data = fromJson(jsonString, BigIntegerData::class.java)
+        assertEquals(0, data.big1.toInt())
+        assertEquals(0, data.big2.toInt())
+
+        jsonString = """{"big1":"12345","big2":"12345"}"""
+        data = fromJson(jsonString, BigIntegerData::class.java)
+        assertEquals(12345, data.big1.toInt())
+        assertEquals(12345, data.big2.toInt())
+
+        jsonString = """{"big1":12345,"big2":12345}"""
+        data = fromJson(jsonString, BigIntegerData::class.java)
+        assertEquals(12345, data.big1.toInt())
+        assertEquals(12345, data.big2.toInt())
+
+        jsonString =
+            """{"big1":123456789123456789123456789123456789,"big2":123456789123456789123456789123456789}"""
+        data = fromJson(jsonString, BigIntegerData::class.java)
+        assertEquals("123456789123456789123456789123456789", data.big1.toString())
+        assertEquals("123456789123456789123456789123456789", data.big2.toString())
+
+        val outString = gson.toJson(data)
+        assertEquals(
+            """{"big1":"123456789123456789123456789123456789","big2":"123456789123456789123456789123456789"}""",
+            outString
+        )
     }
 
     val gson = newGson()
@@ -561,7 +606,7 @@ class ExampleUnitTest {
         type: Type = T::class.java,
         includeNullString: Boolean = false
     ): T {
-        val g = if(includeNullString) gsonIncludeNullString else gson
+        val g = if (includeNullString) gsonIncludeNullString else gson
         return g.fromJson(jsonString, type)
     }
 
@@ -569,10 +614,10 @@ class ExampleUnitTest {
         val stringFactory = if (includeNullString) {
             GsonTypeAdapters.STRING_INCLUDE_NULL_STRING_FACTORY
         } else GsonTypeAdapters.STRING_FACTORY
-        val stringBuilderFactory = if(includeNullString){
+        val stringBuilderFactory = if (includeNullString) {
             GsonTypeAdapters.STRING_BUILDER_INCLUDE_NULL_STRING_FACTORY
         } else GsonTypeAdapters.STRING_BUILDER_FACTORY
-        val stringBufferFactory = if(includeNullString){
+        val stringBufferFactory = if (includeNullString) {
             GsonTypeAdapters.STRING_BUFFER_INCLUDE_NULL_STRING_FACTORY
         } else GsonTypeAdapters.STRING_BUFFER_FACTORY
         return Gson().newBuilder()
