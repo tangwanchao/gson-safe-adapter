@@ -371,17 +371,20 @@ object GsonTypeAdapters {
             Locale.CHINA
         )
 
-        override fun write(writer: JsonWriter, value: Date) {
+        override fun write(writer: JsonWriter, value: Date?) {
+            if (value == null) {
+                writer.nullValue()
+                return
+            }
             writer.value(dateFormat.format(value))
         }
 
         override fun read(reader: JsonReader): Date {
-            if (reader.peek() != JsonToken.STRING) {
+            if (reader.peek() == JsonToken.NULL) {
                 reader.skipValue()
                 return Date()
             }
             val nextString = reader.nextString()
-
             try {
                 val parsed = dateFormat.parse(nextString)
                 if (parsed != null) return parsed
