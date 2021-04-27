@@ -796,12 +796,13 @@ class ExampleUnitTest {
         assertEquals("""{"date1":"2021-4-26 19:35:09","date2":"2021-4-26 19:35:09"}""",outJsonString)
 
         val outData = DateData()
+        outData.date1 = Date()
+        outData.date2 = Date()
         outJsonString = gson.toJson(outData)
         data = fromJson(outJsonString)
         val currentTimeMillis = System.currentTimeMillis()
         assertTrue(currentTimeMillis - data.date1.time < 1000L)
         assertTrue(currentTimeMillis - data.date2.time < 1000L)
-
     }
 
     val gson = newGson()

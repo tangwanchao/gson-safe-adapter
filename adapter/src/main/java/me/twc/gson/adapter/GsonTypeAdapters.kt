@@ -6,13 +6,18 @@ import com.google.gson.TypeAdapter
 import com.google.gson.TypeAdapterFactory
 import com.google.gson.internal.ConstructorConstructor
 import com.google.gson.internal.bind.TypeAdapters
+import com.google.gson.internal.bind.util.ISO8601Utils
 import com.google.gson.stream.JsonReader
 import com.google.gson.stream.JsonToken
 import com.google.gson.stream.JsonWriter
 import me.twc.gson.adapter.utils.logD
-import java.lang.StringBuilder
 import java.math.BigDecimal
 import java.math.BigInteger
+import java.sql.Timestamp
+import java.text.DateFormat
+import java.text.ParseException
+import java.text.ParsePosition
+import java.util.*
 
 /**
  * @author 唐万超
@@ -358,7 +363,70 @@ object GsonTypeAdapters {
     //</editor-fold>
 
     //<editor-fold desc="Data">
-    val DATE_CHINA_MEDIUM_FACTORY: TypeAdapterFactory = ChinaMediumDateTypeAdapter.FACTORY
+    val DATE_CHINA_MEDIUM = object : TypeAdapter<Date>() {
+
+        private val dateFormat = DateFormat.getDateTimeInstance(
+            DateFormat.MEDIUM,
+            DateFormat.MEDIUM,
+            Locale.CHINA
+        )
+
+        override fun write(writer: JsonWriter, value: Date) {
+            writer.value(dateFormat.format(value))
+        }
+
+        override fun read(reader: JsonReader): Date {
+            if (reader.peek() != JsonToken.STRING) {
+                reader.skipValue()
+                return Date()
+            }
+            val nextString = reader.nextString()
+
+            try {
+                val parsed = dateFormat.parse(nextString)
+                if (parsed != null) return parsed
+            } catch (ex: ParseException) {
+                // do nothing
+            }
+
+            try {
+                val parsed = ISO8601Utils.parse(nextString, ParsePosition(0))
+                if (parsed != null) return parsed
+            } catch (ex: ParseException) {
+                // do nothing
+            }
+
+            try {
+                return Date(nextString.toLong())
+            } catch (ex: NumberFormatException) {
+                // do nothing
+            }
+            return Date()
+        }
+    }
+
+    val DATE_CHINA_MEDIUM_FACTORY: TypeAdapterFactory = TypeAdapters.newFactory(
+        Date::class.java,
+        DATE_CHINA_MEDIUM
+    )
+    //</editor-fold>
+
+    //<editor-fold desc="Timestamp">
+    /*val TIMESTAMP_CHINA_MEDIUM = object : TypeAdapter<Timestamp>() {
+        override fun read(reader: JsonReader): Timestamp {
+            val date = DATE_CHINA_MEDIUM.read(reader)
+            return Timestamp(date.time)
+        }
+
+        override fun write(writer: JsonWriter, value: Timestamp) {
+            DATE_CHINA_MEDIUM.write(writer, value)
+        }
+    }
+
+    val TIMESTAMP_CHINA_MEDIUM_FACTORY: TypeAdapterFactory = TypeAdapters.newFactory(
+        Timestamp::class.java,
+        TIMESTAMP_CHINA_MEDIUM
+    )*/
     //</editor-fold>
 
     //</editor-fold>
